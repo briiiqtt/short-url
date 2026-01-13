@@ -1,0 +1,4 @@
+
+POSTGRES_USER: shorturl
+POSTGRES_PASSWORD: shorturlpwpwpw
+POSTGRES_DB: shorturl
