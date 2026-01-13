@@ -1,4 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/shorturl
+    username: shorturl
+    password: shorturlpwpwpw
+    driver-class-name: org.postgresql.Driver
 
-POSTGRES_USER: shorturl
-POSTGRES_PASSWORD: shorturlpwpwpw
-POSTGRES_DB: shorturl
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
