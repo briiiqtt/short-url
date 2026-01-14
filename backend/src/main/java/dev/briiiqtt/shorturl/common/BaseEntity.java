@@ -1,4 +1,4 @@
-package dev.briiiqtt.shorturl;
+package dev.briiiqtt.shorturl.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;
