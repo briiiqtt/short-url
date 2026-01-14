@@ -1,6 +1,6 @@
-package dev.briiiqtt.shorturl.url.entity;
+package dev.briiiqtt.shorturl.url.domain;
 
-import dev.briiiqtt.shorturl.BaseEntity;
+import dev.briiiqtt.shorturl.common.BaseEntity;
 import dev.briiiqtt.shorturl.util.Base62;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

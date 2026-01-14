@@ -1,4 +1,4 @@
-package dev.briiiqtt.shorturl;
+package dev.briiiqtt.shorturl.common;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +11,6 @@ public interface BaseRepository<T extends BaseEntity, ID> extends JpaRepository<
         try {
             delete(entity);
         } catch (EmptyResultDataAccessException ignored) {
-            // 없으면무시
         }
     }
 }

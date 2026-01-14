@@ -1,4 +1,4 @@
-package dev.briiiqtt.shorturl.url.dto.response;
+package dev.briiiqtt.shorturl.url.controller;
 
 public record CreateUrlResponse(String shortenUrl) {
 }
