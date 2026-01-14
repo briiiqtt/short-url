@@ -16,6 +16,8 @@ services:
       db:
         condition: service_healthy
     command: ./gradlew bootRun
+    networks:
+      - internal-net
 
   db:
     image: postgres:16
@@ -30,12 +32,34 @@ services:
     volumes:
       - db-data:/container/path:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U shorturl"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d shorturl"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - internal-net
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - internal-net
 
     
 volumes:
   gradle-cache:
   db-data:
+  redis-data:
+
+networks:
+  internal-net:
+  external-net:
