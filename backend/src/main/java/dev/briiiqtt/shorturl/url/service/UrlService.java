@@ -1,6 +1,7 @@
-package dev.briiiqtt.shorturl.url;
+package dev.briiiqtt.shorturl.url.service;
 
-import dev.briiiqtt.shorturl.url.entity.UrlEntity;
+import dev.briiiqtt.shorturl.url.domain.UrlEntity;
+import dev.briiiqtt.shorturl.url.domain.UrlRepository;
 import dev.briiiqtt.shorturl.util.Base62;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
