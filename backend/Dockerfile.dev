@@ -1,0 +1,11 @@
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle.kts settings.gradle.kts ./
+
+RUN ./gradlew dependencies || true
+
+CMD ["./gradlew", "bootRun"]

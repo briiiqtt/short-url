@@ -1,0 +1,13 @@
+package dev.briiiqtt.shorturl;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@SpringBootApplication
+@EnableJpaAuditing
+public class ShortUrlApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ShortUrlApplication.class, args);
+    }
+}
