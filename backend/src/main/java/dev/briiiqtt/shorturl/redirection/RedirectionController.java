@@ -1,6 +1,5 @@
 package dev.briiiqtt.shorturl.redirection;
 
-import dev.briiiqtt.shorturl.common.ApiResponse;
 import dev.briiiqtt.shorturl.exception.UrlNotFoundException;
 import dev.briiiqtt.shorturl.url.service.UrlService;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +17,11 @@ public class RedirectionController {
     private final UrlService urlService;
 
     @GetMapping("/{encodedId}")
-    public ResponseEntity<ApiResponse<?>> redirect(@PathVariable String encodedId) {
+    public ResponseEntity<Void> redirect(@PathVariable String encodedId) {
         String url = urlService.readUrl(encodedId);
         if (url == null) {
             throw new UrlNotFoundException(encodedId);
         }
-        return ResponseEntity
-                .status(HttpStatus.FOUND)
-                .location(URI.create(url))
-                .build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url)).build();
     }
 }
