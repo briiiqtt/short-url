@@ -2,6 +2,8 @@ package dev.briiiqtt.shorturl.url.controller;
 
 import dev.briiiqtt.shorturl.url.service.UrlService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,10 +13,8 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/shorten")
-    public CreateUrlResponse shorten(@RequestBody CreateUrlRequest req) {
-        System.out.println("SHORTEN REQ RECVD");
-        System.out.println(req.url());
+    public ResponseEntity<CreateUrlResponse> shorten(@RequestBody CreateUrlRequest req) {
         String result = urlService.createUrl(req.url());
-        return new CreateUrlResponse(result);
+        return ResponseEntity.status(HttpStatus.OK).body(new CreateUrlResponse(result));
     }
 }

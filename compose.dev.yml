@@ -59,6 +59,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
+      args:
+          - VITE_URL_BACKEND_INTERNAL=http://backend:8080
+          - VITE_URL_BACKEND_EXTERNAL=http://127.0.0.1:8080
+    env_file:
+      - .env
     ports:
       - "5173:5173"
     volumes:
