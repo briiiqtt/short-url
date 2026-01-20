@@ -6,7 +6,7 @@ const TermsOfService = () => {
           <div className="space-y-4 text-slate-700">
             <h2 className="text-xl font-semibold pt-4">제1조 (목적)</h2>
             <p>
-              이 약관은 briii-url(이하 "회사")이 제공하는 URL 단축 서비스(이하 "서비스")의 이용과 관련하여 회사와 사용자 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+              이 약관은 bri-url(이하 "회사")이 제공하는 URL 단축 서비스(이하 "서비스")의 이용과 관련하여 회사와 사용자 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
             </p>
             <h2 className="text-xl font-semibold pt-4">제2조 (서비스의 제공)</h2>
             <p>
