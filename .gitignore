@@ -59,9 +59,8 @@ lerna-debug.log*
 
 # ==========================================
 # # Environment & Data (보안 및 로컬 데이터)
-.env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 *.local
 
 # Database & Docker
