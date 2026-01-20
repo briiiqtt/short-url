@@ -18,6 +18,7 @@ services:
     command: ./gradlew bootRun
     networks:
       - internal-net
+      - external-net
 
   db:
     image: postgres:16
@@ -30,7 +31,7 @@ services:
       POSTGRES_DB: shorturl
       TZ: Asia/Seoul
     volumes:
-      - db-data:/container/path:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d shorturl"]
       interval: 10s
@@ -53,6 +54,23 @@ services:
     restart: unless-stopped
     networks:
       - internal-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+      args:
+          - VITE_URL_BACKEND_INTERNAL=http://backend:8080
+          - VITE_URL_BACKEND_EXTERNAL=http://127.0.0.1:8080
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - external-net
 
     
 volumes:
