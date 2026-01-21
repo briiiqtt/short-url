@@ -17,7 +17,7 @@ services:
         - bombs
 
   db:
-    image: postgres
+    image: postgres:16
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -35,7 +35,7 @@ services:
       - inter-net
 
   cache:
-    image: redis
+    image: redis:7-alpine
     volumes:
       - cache-data:/data
     healthcheck:
