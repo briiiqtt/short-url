@@ -14,17 +14,17 @@ services:
         condition: service_healthy
     networks:
         - inter-net
-        - public-net
+        - bombs
 
   db:
-    image: postgres
+    image: postgres:16
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=shorturl
       - TZ=Asia/Seoul
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d shorturl']
       interval: 10s
@@ -35,7 +35,7 @@ services:
       - inter-net
 
   cache:
-    image: redis
+    image: redis:7-alpine
     volumes:
       - cache-data:/data
     healthcheck:
@@ -58,7 +58,7 @@ services:
     environment:
       - NODE_ENV=produce
     networks:
-      - public-net
+      - bombs
 
 volumes:
   db-data:
@@ -66,6 +66,5 @@ volumes:
 
 networks:
   inter-net:
-  public-net:
+  bombs:
     external: true
-    name: infra_default
