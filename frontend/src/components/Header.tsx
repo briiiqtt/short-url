@@ -3,7 +3,7 @@ const Header: React.FC = () => {
       <header className="sticky top-0 z-50 h-16 w-full bg-white/80 backdrop-blur-lg border-b border-slate-200">
         <div className="container mx-auto flex items-center justify-between h-full px-4">
           <div className="text-xl font-bold text-slate-900">
-            <a href="/">bri-url</a>
+            <a href="/">shorturl</a>
           </div>
           <nav className="flex items-center space-x-6">
             <a
