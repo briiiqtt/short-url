@@ -6,12 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UrlEntity extends BaseEntity {
 
     @Id
@@ -22,5 +21,9 @@ public class UrlEntity extends BaseEntity {
 
     public String getShortenUrl() {
         return Base62.encode(this.id);
+    }
+
+    public UrlEntity(String url) {
+        this.url = url;
     }
 }
