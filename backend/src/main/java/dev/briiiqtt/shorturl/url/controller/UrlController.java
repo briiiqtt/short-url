@@ -14,7 +14,7 @@ public class UrlController {
 
     @PostMapping("/shorten")
     public ResponseEntity<CreateUrlResponse> shorten(@RequestBody CreateUrlRequest req) {
-        String result = urlService.createUrl(req.url());
+        String result = urlService.createUrl(req);
         return ResponseEntity.status(HttpStatus.OK).body(new CreateUrlResponse(result));
     }
 }

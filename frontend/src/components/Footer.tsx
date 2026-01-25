@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="col-span-2 md:col-span-1">
-              <h3 className="text-lg font-bold text-slate-900">bri-url</h3>
+              <h3 className="text-lg font-bold text-slate-900">shorturl</h3>
               <p className="text-sm text-slate-500 mt-2">간편한 URL 단축 서비스</p>
             </div>
             <div>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
-            <p>&copy; {new Date().getFullYear()} bri-url. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} shorturl. All rights reserved.</p>
           </div>
         </div>
       </footer>
