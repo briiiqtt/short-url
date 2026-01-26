@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://db:5432/shorturl
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: SPRING_DATASOURCE_USERNAME
+    password: SPRING_DATASOURCE_PASSWORD
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -28,6 +28,10 @@ spring:
     type: redis
     redis:
       time-to-live: 3600000
+
+  jwt:
+    secret: SPRING_JWT_SECRET
+    expiration-time: 3600000
 
 logging:
   level:
