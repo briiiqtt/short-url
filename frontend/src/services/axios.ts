@@ -15,6 +15,7 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.status === 404) {
       // TODO: navigate to 404.html; should make 404 page first.
+      // TODO: 다른 예외처리도 어떤걸 어떻게 해놨는지 보고 체계화 하기
     }
     return Promise.reject(error);
   }
