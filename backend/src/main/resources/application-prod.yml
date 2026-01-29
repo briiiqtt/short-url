@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc.batch_size: 100 # jdbc 배치 활성화
+        order_inserts: true # 인서트 쿼리를 같은 테이블끼리 묶는다
+        order_updates: true # 업데이트 쿼리를 같은 테이블끼리 묶는다
+
+
+logging:
+  level:
+    root: info # 기본 로깅 레벨: info
+#    org.hibernate.SQL: debug
+#    org.hibernate.type.descriptor.sql: debug
+#    org.springframework.web.cors: debug
+#    org.springframework.web.filter.CorsFilter: debug
