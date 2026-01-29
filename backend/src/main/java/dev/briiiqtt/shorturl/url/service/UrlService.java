@@ -18,8 +18,8 @@ public class UrlService {
     private final UrlCacheService urlCacheService;
 
     public String createUrl(CreateUrlRequest req) {
-        UrlEntity entity = new UrlEntity(req.url());
-        urlRepository.save(entity);
+        UrlEntity entity = UrlEntity.of(req.url());
+        entity = urlRepository.save(entity);
         urlCacheService.saveUrl(new UrlCache(entity.getId(), entity.getUrl()));
         return entity.getShortenUrl();
     }

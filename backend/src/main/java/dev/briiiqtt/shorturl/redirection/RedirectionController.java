@@ -20,7 +20,7 @@ public class RedirectionController {
     public ResponseEntity<Void> redirect(@PathVariable String encodedId) {
         String url = urlService.readUrl(encodedId);
         if (url == null) {
-            throw new UrlNotFoundException(encodedId);
+            throw new UrlNotFoundException();
         }
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url)).build();
     }
