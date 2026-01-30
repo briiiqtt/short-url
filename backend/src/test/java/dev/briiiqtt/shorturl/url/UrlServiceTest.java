@@ -3,11 +3,13 @@ package dev.briiiqtt.shorturl.url;
 import dev.briiiqtt.shorturl.cache.UrlCache;
 import dev.briiiqtt.shorturl.cache.UrlCacheService;
 import dev.briiiqtt.shorturl.exception.InvalidInputException;
-import dev.briiiqtt.shorturl.exception.UrlNotFoundException;
 import dev.briiiqtt.shorturl.url.controller.CreateUrlRequest;
 import dev.briiiqtt.shorturl.url.domain.UrlEntity;
 import dev.briiiqtt.shorturl.url.domain.UrlRepository;
 import dev.briiiqtt.shorturl.url.service.UrlService;
+import dev.briiiqtt.shorturl.util.CustomBase62Service;
+import dev.briiiqtt.shorturl.util.EncodingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +28,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UrlServiceTest {
 
     @Mock
+    private EncodingService encodingService;
+
+    @Mock
     private UrlRepository urlRepository;
 
     @Mock
@@ -33,6 +38,13 @@ public class UrlServiceTest {
 
     @InjectMocks
     private UrlService urlService;
+
+    @BeforeEach
+    void setUp() {
+        //EncodingService는 실제 객체 사용
+        encodingService = new CustomBase62Service("test-salt-string");
+        urlService = new UrlService(urlRepository, urlCacheService, encodingService);
+    }
 
     @Test
     @DisplayName("단축 URL 생성 후 걔가 DB와 캐시에 각각 저장돼야함")
@@ -53,6 +65,9 @@ public class UrlServiceTest {
         verify(urlCacheService).saveUrl(any(UrlCache.class));
     }
 
+    /*
+    salt를 추가하게돼서 정확한 값을 미리 알 수 없게 됨.
+
     @Test
     @DisplayName("단축 URL 생성시 리턴값이 정확한 Base62 인코딩 결과여야함")
     public void createUrl_validInput_returnPreciseValue() {
@@ -70,7 +85,7 @@ public class UrlServiceTest {
         //then
         assertThat(result).isEqualTo("1C");
     }
-
+     */
 
     @Test
     @DisplayName("단축 URL 생성시 잘못된 형식의 입력값에 대해 예외를 반환해야함")

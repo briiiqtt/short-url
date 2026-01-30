@@ -5,7 +5,7 @@ import dev.briiiqtt.shorturl.cache.UrlCacheService;
 import dev.briiiqtt.shorturl.url.controller.CreateUrlRequest;
 import dev.briiiqtt.shorturl.url.domain.UrlEntity;
 import dev.briiiqtt.shorturl.url.domain.UrlRepository;
-import dev.briiiqtt.shorturl.util.Base62;
+import dev.briiiqtt.shorturl.util.EncodingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +16,17 @@ import java.util.Optional;
 public class UrlService {
     private final UrlRepository urlRepository;
     private final UrlCacheService urlCacheService;
+    private final EncodingService encodingService;
 
     public String createUrl(CreateUrlRequest req) {
         UrlEntity entity = UrlEntity.of(req.url());
         entity = urlRepository.save(entity);
         urlCacheService.saveUrl(new UrlCache(entity.getId(), entity.getUrl()));
-        return entity.getShortenUrl();
+        return encodingService.encode(entity.getId());
     }
 
     public String readUrl(String req) {
-        long id = Base62.decode(req);
+        long id = encodingService.decode(req);
 
         UrlCache urlCache = urlCacheService.getUrl(id);
         if (urlCache != null) {
