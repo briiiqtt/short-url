@@ -1,8 +1,8 @@
 package dev.briiiqtt.shorturl.cache;
 
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash(value = "url", timeToLive = 3600)
@@ -10,11 +10,13 @@ import org.springframework.data.redis.core.RedisHash;
 @Setter
 public class UrlCache {
     @Id
-    private Long id;
-    private String url;
+    private String shortenedUrl;
+    private String originalUrl;
 
-    public UrlCache(Long id, String url) {
-        this.id = id;
-        this.url = url;
+    public static UrlCache of(String shortenedUrl, String originalUrl) {
+        UrlCache urlCache = new UrlCache();
+        urlCache.shortenedUrl = shortenedUrl;
+        urlCache.originalUrl = originalUrl;
+        return urlCache;
     }
 }
