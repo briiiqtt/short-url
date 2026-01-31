@@ -5,24 +5,27 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shorturl
-      - SPRING_DATASOURCE_USERNAME=${DB_USER}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-      - SPRING_DATA_REDIS_HOST=cache
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/shorturl
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATA_REDIS_HOST: cache
     depends_on:
       db:
         condition: service_healthy
     networks:
-        - inter-net
-        - bombs
+      - inter-net
+      - bombs
 
   db:
     image: postgres:16
+    ports:
+     - "5432:5432" # port는 할당하지만 방화벽은 열지 않습니다. 접근은 ssh터널링으로 합니다
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=shorturl
-      - TZ=Asia/Seoul
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: shorturl
+      TZ: Asia/Seoul
     volumes:
       - db-data:/var/lib/postgresql
     healthcheck:
@@ -53,10 +56,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
       args:
-        - VITE_URL_BACKEND_INTERNAL=http://s.bombs.kr
-        - VITE_URL_BACKEND_EXTERNAL=http://s.bombs.kr
+        VITE_URL_BACKEND_INTERNAL: "http://s.bombs.kr"
+        VITE_URL_BACKEND_EXTERNAL: "http://s.bombs.kr"
     environment:
-      - NODE_ENV=produce
+      NODE_ENV: produce
     networks:
       - bombs
 

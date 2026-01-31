@@ -9,7 +9,7 @@ services:
       - ./backend:/app
       - gradle-cache:/root/.gradle
     environment:
-      SPRING_PROFILES_ACTIVE: local
+      SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
     depends_on:
@@ -60,15 +60,15 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
       args:
-          - VITE_URL_BACKEND_INTERNAL=http://backend:8080
-          - VITE_URL_BACKEND_EXTERNAL=http://127.0.0.1:8080
+        VITE_URL_BACKEND_INTERNAL: "http://backend:8080"
+        VITE_URL_BACKEND_EXTERNAL: "http://127.0.0.1:8080"
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      NODE_ENV: development
     networks:
       - external-net
 

@@ -12,24 +12,27 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ErrorResponse> handle(InvalidInputException e) {
+        ErrorResponse error = ErrorResponse.of(CustomError.INVALID_INPUT);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
+
     @ExceptionHandler(UrlNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handle(UrlNotFoundException e) {
-        Map<String, String> error = new HashMap<>();
-        error.put("reason", e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    public ResponseEntity<ErrorResponse> handle(UrlNotFoundException e) {
+        ErrorResponse error = ErrorResponse.of(CustomError.URL_NOT_FOUND);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<Map<String, String>> handle(NoResourceFoundException e) {
-        Map<String, String> error = new HashMap<>();
-        error.put("reason", "no resource found");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    public ResponseEntity<ErrorResponse> handle(NoResourceFoundException e) {
+        ErrorResponse error = ErrorResponse.of(CustomError.NOT_FOUND);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handle(Exception e) {
-        Map<String, String> error = new HashMap<>();
-        error.put("reason", e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    public ResponseEntity<ErrorResponse> handle(Exception e) {
+        ErrorResponse error = ErrorResponse.of(CustomError.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 }

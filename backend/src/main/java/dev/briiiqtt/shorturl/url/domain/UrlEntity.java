@@ -1,12 +1,16 @@
 package dev.briiiqtt.shorturl.url.domain;
 
 import dev.briiiqtt.shorturl.common.BaseEntity;
-import dev.briiiqtt.shorturl.util.Base62;
+import dev.briiiqtt.shorturl.exception.InvalidInputException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Entity
 @Getter
@@ -19,11 +23,17 @@ public class UrlEntity extends BaseEntity {
 
     private String url;
 
-    public String getShortenUrl() {
-        return Base62.encode(this.id);
-    }
+    public static UrlEntity of(String url) {
+        //TODO: Apache Commons Validator 고려
 
-    public UrlEntity(String url) {
-        this.url = url;
+        try {
+            var __ = new URI(url).toURL();
+        } catch (IllegalArgumentException | NullPointerException | MalformedURLException | URISyntaxException e) {
+            throw new InvalidInputException();
+        }
+
+        UrlEntity entity = new UrlEntity();
+        entity.url = url;
+        return entity;
     }
 }
