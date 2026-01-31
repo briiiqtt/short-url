@@ -5,6 +5,9 @@ WORKDIR /app
 COPY gradlew build.gradle.kts settings.gradle.kts ./
 COPY gradle gradle/
 RUN chmod +x gradlew
+
+RUN ./gradlew dependencies --no-daemon
+
 COPY src src/
 
 RUN ./gradlew bootJar && cp build/libs/*.jar app.jar
