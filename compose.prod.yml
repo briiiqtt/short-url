@@ -19,6 +19,8 @@ services:
 
   db:
     image: postgres:16
+    ports:
+     - "5432:5432" # port는 할당하지만 방화벽은 열지 않습니다. 접근은 ssh터널링으로 합니다
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
