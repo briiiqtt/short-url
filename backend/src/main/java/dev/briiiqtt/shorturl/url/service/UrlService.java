@@ -21,8 +21,8 @@ public class UrlService {
     public String createUrl(CreateUrlRequest req) {
         UrlEntity entity = UrlEntity.of(req.url());
         entity = urlRepository.save(entity);
-        urlCacheService.saveUrl(new UrlCache(entity.getId(), entity.getUrl()));
-        return encodingService.encode(entity.getId());
+        entity.assignShortenedUrl(encodingService.encode(entity.getId()));
+        return entity.getShortenedUrl();
     }
 
     public String readUrl(String req) {
@@ -30,13 +30,16 @@ public class UrlService {
 
         UrlCache urlCache = urlCacheService.getUrl(id);
         if (urlCache != null) {
-            return urlCache.getUrl();
+            return urlCache.getOriginalUrl();
         }
 
         Optional<UrlEntity> o = urlRepository.findById(id);
         if (o.isEmpty()) return null;
 
         UrlEntity entity = o.get();
-        return entity.getUrl();
+
+        urlCacheService.saveUrl(UrlCache.of(entity.getShortenedUrl(), entity.getOriginalUrl()));
+
+        return entity.getOriginalUrl();
     }
 }

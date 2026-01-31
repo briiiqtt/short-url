@@ -9,10 +9,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/shorturl
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_BASE62_SALT: ${BASE62_SALT}
       SPRING_DATA_REDIS_HOST: cache
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health/readiness"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
     networks:
       - inter-net
       - bombs
@@ -32,7 +38,7 @@ services:
       test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d shorturl']
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
     restart: unless-stopped
     networks:
       - inter-net
@@ -45,7 +51,7 @@ services:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
     restart: unless-stopped
     networks:
       - inter-net
@@ -60,6 +66,9 @@ services:
         VITE_URL_BACKEND_EXTERNAL: "http://s.bombs.kr"
     environment:
       NODE_ENV: produce
+    depends_on:
+      backend:
+        condition: service_healthy
     networks:
       - bombs
 

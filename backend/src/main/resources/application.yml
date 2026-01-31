@@ -25,3 +25,14 @@ spring:
     type: redis
     redis:
       time-to-live: 3600000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health  # /actuator/health/readiness를 exposure
+  endpoint:
+    health:
+      probes:
+        enabled: true # 이 설정은 /actuator/health/readiness api를 활성화함.
+        #/actuator/health/readiness는 앱이 메모리에 올라갔고, DB 연결도 됐을 떄, 즉 "요청을 받으면 응답은 할 수 있는 상태다" 라는 걸 docker가 확인 가능하게 함
