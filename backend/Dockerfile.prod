@@ -16,6 +16,9 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
+# for healthcheck
+RUN apk add --no-cache curl
+
 COPY --from=build /app/app.jar .
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]

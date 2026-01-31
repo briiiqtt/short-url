@@ -14,6 +14,9 @@ spring:
         order_inserts: true # 인서트 쿼리를 같은 테이블끼리 묶는다
         order_updates: true # 업데이트 쿼리를 같은 테이블끼리 묶는다
 
+  flyway:
+    enabled: true
+
 
 logging:
   level:
